@@ -1,0 +1,199 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Button" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF171717"/>
+                    <GradientStop Color="#FF1F1F1F" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle StrokeThickness="0" Stroke="Transparent" StrokeDashArray="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.5"
+                                To="0.2"
+                                Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ButtonDefault" TargetType="Button" BasedOn="{StaticResource Button}">
+        <Setter Property="FontFamily" Value="Microsoft YaHei Light"/>
+    </Style>
+    <Style x:Key="AnimatedEllipce" TargetType="Ellipse">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled"  Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="1.0"
+                                To="0.5"
+                                Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ButtonSemiStatic" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF171717"/>
+                    <GradientStop Color="#FF1F1F1F" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle StrokeThickness="0" Stroke="Transparent" StrokeDashArray="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0.5"
+                                Duration="0:0:1" AutoReverse="True"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ButtonSemiStaticDefault" TargetType="Button" BasedOn="{StaticResource  ButtonSemiStatic}">
+        <Setter Property="FontFamily" Value="Microsoft YaHei Light"/>
+    </Style>
+    <Style TargetType="Label" x:Key="DsDigital">
+        <Setter Property="FontFamily" Value="/Fonts/#DS-Digital"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+    </Style>
+    <Style TargetType="Label" x:Key="DefaultLabel">
+        <Setter Property="FontFamily" Value="Microsoft YaHei Light"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+    </Style>
+    <Style TargetType="TextBox" x:Key="DsDigitalTb">
+        <Setter Property="FontFamily" Value="/Fonts/#DS-Digital"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+    </Style>
+    <Style TargetType="TextBox" x:Key="DefaultTextBox">
+        <Setter Property="FontFamily" Value="Microsoft YaHei Light"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="DefaultTextBlock">
+        <Setter Property="FontFamily" Value="Microsoft YaHei Light"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+    </Style>
+    <Style TargetType="Grid" x:Key="AnimatedGrid">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsVisible}" 
+                         Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0.0" To="1.0"
+                                             Duration="0:0:0.5"
+                                             AutoReverse="False"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="StackPanel" x:Key="AnimatedStackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsVisible}" 
+                         Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0.0" To="1.0"
+                                             Duration="0:0:0.5"
+                                             AutoReverse="False"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DefaultCell" TargetType="DataGridCell">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style x:Key="DefaultDataGridHeader" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#181718"/>
+        <Setter Property="Foreground" Value="#08FFFB"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="/Fonts/#DS-Digital"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+</ResourceDictionary>

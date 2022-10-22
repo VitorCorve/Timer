@@ -1,0 +1,176 @@
+﻿<Window x:Class="Timer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Timer"
+        xmlns:vm="clr-namespace:Timer.ViewModel"
+        xmlns:views="clr-namespace:Timer.Views"
+        mc:Ignorable="d"
+        xmlns:tools="clr-namespace:Timer.Converters"
+        Title="Timer" 
+        Height="400" 
+        Width="230" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" 
+        Background="Black"
+        x:Name="MainWindowElement">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <tools:HourToDegreeConverter x:Key="HourToDegreeConverter"/>
+        <tools:MinuteToDegreeConverter x:Key="MinuteToDegreeConverter"/>
+    </Window.Resources>
+    <Grid Background="#181718" Style="{StaticResource AnimatedGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.07*"/>
+            <RowDefinition Height="0.9*"/>
+        </Grid.RowDefinitions>
+        <views:LoadingControl Panel.ZIndex="2" Visibility="{Binding ElementName=MainWindowElement, Path=DataContext.LoadingVisibility, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+        <views:AuthControl Panel.ZIndex="1" Visibility="{Binding ElementName=MainWindowElement, Path=DataContext.AuthVisibility, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+        <views:RegisterControl Panel.ZIndex="1" Visibility="{Binding ElementName=MainWindowElement, Path=DataContext.RegisterVisibility, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+        <views:LuaControl Panel.ZIndex="1" Visibility="{Binding ElementName=MainWindowElement, Path=DataContext.LuaVisibility, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+        <views:OptionsControl Panel.ZIndex="1" Visibility="{Binding ElementName=MainWindowElement, Path=DataContext.OptionsVisibility, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Top" Opacity="0.4">
+            <Button Cursor="Hand" Style="{StaticResource Button}" Background="Transparent" Width="20" Height="20" VerticalAlignment="Center" Margin="0,0,3,0" Click="Minimize">
+                <Button.Content>
+                    <Rectangle Fill="Gray" Height="1" Width="12" HorizontalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+            <Button Cursor="Hand" Style="{StaticResource Button}" Background="Transparent" Width="20" Height="20" VerticalAlignment="Center" Margin="0,0,3,0" Click="Exit">
+                <Button.Content>
+                    <Grid>
+                        <Line X1="1" Y1="1" X2="12" Y2="12" Stroke="Gray"/>
+                        <Line X1="1" Y1="12" X2="12" Y2="1" Stroke="Gray"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <StackPanel Style="{StaticResource AnimatedStackPanel}" HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0.9" Grid.Row="1" Visibility="{Binding ClocksVisibility, UpdateSourceTrigger=PropertyChanged}">
+            <Label Content="{Binding CurrentDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#08FFFB" FontSize="15" Style="{StaticResource DsDigital}" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+            <Grid Margin="0,60,0,0">
+                <Line x:Name="Hour"
+                      Y2="-45"
+                      Stroke="#08FFFB"
+                      StrokeThickness="2.5"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      RenderTransformOrigin=".5,.5">
+                    <Line.RenderTransform>
+                        <RotateTransform Angle="{Binding Hour, Converter={StaticResource HourToDegreeConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Line.RenderTransform>
+                </Line>
+                <Line x:Name="Minute"
+                      Y2="-50"
+                      Stroke="#08FFFB"
+                      StrokeThickness="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      RenderTransformOrigin=".5,.5">
+                    <Line.RenderTransform>
+                        <RotateTransform Angle="{Binding Minute, Converter={StaticResource MinuteToDegreeConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Line.RenderTransform>
+                </Line>
+                <Line x:Name="Second"
+                      Y2="-50"
+                      Stroke="#08FFFB"
+                      StrokeThickness="0.3"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      RenderTransformOrigin=".5,.5">
+                    <Line.RenderTransform>
+                        <RotateTransform Angle="{Binding Second, Converter={StaticResource MinuteToDegreeConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Line.RenderTransform>
+                </Line>
+            </Grid>
+            <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,70,0,0">
+                <Button Margin="0,0,0,0" Style="{StaticResource Button}" Command="{Binding ShowLadder}" Width="47" Background="Transparent" Foreground="Gray" Cursor="Hand" Opacity="0.5">
+                    <Button.ToolTip>
+                        <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                            <Border Background="Transparent">
+                                <Label Content="Ladder" Background="Transparent" Foreground="#08FFFB"/>
+                            </Border>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    <Button.Content>
+                        <Grid>
+                            <Ellipse StrokeThickness="2.3" Fill="Transparent" Width="47" Height="47" Stroke="Cyan"/>
+                            <Ellipse StrokeThickness="0.1" Fill="Transparent" Width="47" Height="47" Stroke="#08FFFB"/>
+                            <Ellipse StrokeThickness="0" Fill="Gray" Width="14" Height="14" Opacity="0.3"/>
+                            <Label FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ladder" Style="{StaticResource DefaultLabel}"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Margin="10,0,0,0" Style="{StaticResource Button}" Command="{Binding ShowOptions}" Width="47" Background="Transparent" Foreground="Gray" Cursor="Hand" Opacity="0.5">
+                    <Button.ToolTip>
+                        <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                            <Border Background="Transparent">
+                                <Label Content="Options" Background="Transparent" Foreground="#08FFFB"/>
+                            </Border>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    <Button.Content>
+                        <Grid>
+                            <Ellipse StrokeThickness="2.3" Fill="Transparent" Width="47" Height="47" Stroke="Cyan"/>
+                            <Ellipse StrokeThickness="0.1" Fill="Transparent" Width="47" Height="47" Stroke="#08FFFB"/>
+                            <Ellipse StrokeThickness="0" Fill="Gray" Width="14" Height="14" Opacity="0.3"/>
+                            <Label FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Options" Style="{StaticResource DefaultLabel}"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <Label Content="{Binding Statistics.SpentToday, UpdateSourceTrigger=PropertyChanged}" Width="160" Foreground="#08FFFB" FontSize="45" Style="{StaticResource DsDigital}" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="{Binding Statistics.HoursThisWeek, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="w {0}" Foreground="#08FFFB" FontSize="15" Style="{StaticResource DsDigital}">
+                    <Label.ToolTip>
+                        <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                            <Border Background="Transparent">
+                                <Label Content="Time spent this week" Background="Transparent" Foreground="#08FFFB"/>
+                            </Border>
+                        </ToolTip>
+                    </Label.ToolTip>
+                </Label>
+                <Label Content="{Binding Statistics.HoursThisMonth, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="m {0}"  Foreground="#08FFFB" FontSize="15" Style="{StaticResource DsDigital}">
+                    <Label.ToolTip>
+                        <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                            <Border Background="Transparent">
+                                <Label Content="Time spent this month" Background="Transparent" Foreground="#08FFFB"/>
+                            </Border>
+                        </ToolTip>
+                    </Label.ToolTip>
+                </Label>
+                <Label Content="{Binding Statistics.HoursTotal, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="T {0}" Foreground="#08FFFB" FontSize="15" Style="{StaticResource DsDigital}">
+                    <Label.ToolTip>
+                        <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                            <Border Background="Transparent">
+                                <Label Content="Time spent total" Background="Transparent" Foreground="#08FFFB"/>
+                            </Border>
+                        </ToolTip>
+                    </Label.ToolTip>
+                </Label>
+            </StackPanel>
+            <Button x:Name="EngageButton" Margin="0,20,0,0" Style="{StaticResource Button}" Command="{Binding Statistics.EngageTimerCommand}" Width="40" Background="Transparent" Foreground="Gray" Cursor="Hand" Opacity="0.5">
+                <Button.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding Statistics.EngageTimerCommand}"/>
+                </Button.InputBindings>
+                <Button.ToolTip>
+                    <ToolTip Background="#181718" BorderThickness="1" BorderBrush="Black">
+                        <Border Background="Transparent">
+                            <Label Content="Engage" Background="Transparent" Foreground="#08FFFB"/>
+                        </Border>
+                    </ToolTip>
+                </Button.ToolTip>
+                <Button.Content>
+                    <Grid>
+                        <Ellipse StrokeThickness="2.3" Fill="Transparent" Width="17" Height="17" Stroke="Cyan"/>
+                        <Ellipse StrokeThickness="0.1" Fill="Transparent" Width="17" Height="17" Stroke="#08FFFB"/>
+                        <Ellipse StrokeThickness="0" Fill="Gray" Width="14" Height="14" Opacity="0.3"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <Border BorderThickness="1" BorderBrush="Black" Background="Transparent" Grid.RowSpan="2" MouseDown="Border_MouseDown" Panel.ZIndex="-1"/>
+    </Grid>
+</Window>
